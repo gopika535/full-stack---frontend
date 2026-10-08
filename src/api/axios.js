@@ -31,6 +31,10 @@ api.interceptors.response.use(
 
 export const errMsg = (e, fallback = 'Something went wrong') =>
   e?.response?.data?.message ||
-  (e?.code === 'ERR_NETWORK' ? 'Cannot reach the server. Is the backend running on port 8081?' : fallback)
+  e?.response?.data?.error ||
+  (typeof e?.response?.data === 'string' && e.response.data.trim() ? e.response.data : null) ||
+  (e?.code === 'ERR_NETWORK' ? 'Cannot reach the server. Is the backend running on port 8081?' : null) ||
+  e?.message ||
+  fallback
 
 export default api
