@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+let rawUrl = import.meta.env.VITE_API_URL || 'http://localhost:8081/api'
+if (rawUrl && !rawUrl.endsWith('/api') && !rawUrl.endsWith('/api/')) {
+  rawUrl = rawUrl.replace(/\/+$/, '') + '/api'
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8081/api',
+  baseURL: rawUrl,
 })
 
 // attach JWT to every request
